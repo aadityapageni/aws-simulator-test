@@ -1,0 +1,23 @@
+[package]
+name = "aws-emulator-rust-demo"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+aws-config = "1"
+aws-sdk-s3 = "1"
+
+[dev-dependencies]
+# You can also pin `rev = "7eb5bf3e83f51302e9d7bc7ffd19e2ebc91fbccc"` to lock a release commit from:
+# https://github.com/aws/aws-emulator/releases
+aws-emulator-embedded = { git = "https://github.com/aws/aws-emulator" }
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+
+# aws-emulator-embedded links 400+ service crates; disabling debuginfo in dev
+# avoids >4GiB 32-bit DWARF (.debug_macro) relocation overflow in ld.lld and saves ~80GB of disk space.
+[profile.dev]
+debug = false
+strip = "debuginfo"
+
+
+
